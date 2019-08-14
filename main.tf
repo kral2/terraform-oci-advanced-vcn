@@ -86,11 +86,9 @@ resource "oci_core_route_table" "hub-lpg-tonexthop" {
   vcn_id         = "${oci_core_vcn.this.id}"
   display_name   = "${var.hub_lpg_rt_display_name}"
 
-  route_rules
-    {
+  route_rules {
       // route all traffic to HUB DRG
       destination = "0.0.0.0/0"
-
       network_entity_id = "${var.hub_lpg_nexthop}"
     }
   
