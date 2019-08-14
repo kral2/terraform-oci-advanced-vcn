@@ -58,7 +58,7 @@ resource "oci_core_drg" "this" {
 
 resource "oci_core_drg_attachment" "this" {
   count          = "${var.create_drg}"
-  drg_id         = "${oci_core_drg.this.id}"
+  drg_id         = "${oci_core_drg.this[count.index].id}"
   vcn_id         = "${oci_core_vcn.this.id}"
   route_table_id = "${oci_core_vcn.this.default_route_table_id}"
 }
