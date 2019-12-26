@@ -58,7 +58,7 @@ resource "oci_core_drg" "this" {
 
 resource "oci_core_drg_attachment" "this" {
   count          = "${var.create_drg}"
-  drg_id         = "${oci_core_drg.this.id}"
+  drg_id         = "${oci_core_drg.this[count.index].id}"
   vcn_id         = "${oci_core_vcn.this.id}"
   route_table_id = "${oci_core_vcn.this.default_route_table_id}"
 }
@@ -86,15 +86,12 @@ resource "oci_core_route_table" "hub-lpg-tonexthop" {
   vcn_id         = "${oci_core_vcn.this.id}"
   display_name   = "${var.hub_lpg_rt_display_name}"
 
-  route_rules = [
-    {
+  route_rules {
       // route all traffic to HUB DRG
       destination = "0.0.0.0/0"
-
       network_entity_id = "${var.hub_lpg_nexthop}"
-    },
-  ]
-
+    }
+  
   freeform_tags = {
     "Terraformed" = "yes"
     "TF-Module" = "advanced-vcn"

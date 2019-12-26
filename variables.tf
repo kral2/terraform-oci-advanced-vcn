@@ -23,7 +23,7 @@ variable "create_igw" {
 
 variable "enable_igw" {
   description = "If set to true, Internet Gateway is enabled"
-  default     = 1
+  default     = true
 }
 
 variable "igw_display_name" {
